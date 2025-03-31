@@ -341,13 +341,13 @@ function setupCharts() {
 function setupWorkoutDistributionChart(canvas) {
     const ctx = canvas.getContext('2d');
     
-    // Check if the chart data is available in a data attribute
+    // Get the chart data from the data attribute
     let chartData;
     try {
         chartData = JSON.parse(canvas.dataset.chartData || '[]');
     } catch (e) {
-        // If parsing fails, use sample data
-        chartData = [3, 4, 2, 5, 1, 2, 0];
+        console.error('Error parsing chart data:', e);
+        chartData = [0, 0, 0, 0, 0, 0, 0]; // Default to zeros instead of sample data
     }
     
     // Check for theme preference

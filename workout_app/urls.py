@@ -33,10 +33,6 @@ urlpatterns = [
     path('workout-exercises/<int:pk>/delete/', views.delete_workout_exercise, name='delete_workout_exercise'),
     path('update-exercise-order/', views.update_exercise_order, name='update_exercise_order'),
     
-    # Exercise Library
-    path('exercises/', views.exercise_library, name='exercise_library'),
-    path('exercises/<int:pk>/', views.exercise_detail, name='exercise_detail'),
-    
     # Workout Sessions
     path('workout/', views.workout, name='workout'),
     path('start-workout/', views.start_workout, name='start_workout'),
@@ -48,5 +44,4 @@ urlpatterns = [
     
     # User Settings
     path('settings/', views.settings, name='settings'),
-    path('stats/', views.advanced_stats, name='advanced_stats'),
 ]

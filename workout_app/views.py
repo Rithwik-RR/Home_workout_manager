@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.utils import timezone
 from django.http import JsonResponse
 from django.db.models import Count
+from .utils import workout_update
 from .forms import (
     UserRegisterForm, 
     UserUpdateForm,  # Add this import
@@ -243,32 +244,9 @@ def start_workout(request, day_pk=None):
             messages.error(request, "You don't have permission to access this workout.")
             return redirect('dashboard')
         
+        workout_log = workout_update(request, day, WorkoutLog, ExerciseLog, WorkoutExercise)
         # Check if workout already exists for today
-        today = timezone.now().date()
-        existing_log = WorkoutLog.objects.filter(
-            user=request.user,
-            workout_plan=day.plan,
-            workout_day=day,
-            date=today
-        ).first()
         
-        if existing_log:
-            workout_log = existing_log
-        else:
-            # Create new workout log
-            workout_log = WorkoutLog.objects.create(
-                user=request.user,
-                workout_plan=day.plan,
-                workout_day=day,
-                date=today
-            )
-            
-            # Create exercise logs for each exercise in the workout day
-            for exercise_item in WorkoutExercise.objects.filter(workout_day=day).order_by('order'):
-                ExerciseLog.objects.create(
-                    workout_log=workout_log,
-                    exercise=exercise_item.exercise
-                )
         
         return redirect('perform_workout', log_pk=workout_log.pk)
     

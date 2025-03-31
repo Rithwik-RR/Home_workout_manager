@@ -12,23 +12,6 @@
         </button>
     </div>
     
-    <!-- Search and Filter -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-8">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        <input type="text" class="form-control" name="search" placeholder="Search exercises..." value="{{ request.GET.search|default:'' }}">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary w-100">Search</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    
     {% if exercises %}
     <div class="row">
         {% for exercise in exercises %}
