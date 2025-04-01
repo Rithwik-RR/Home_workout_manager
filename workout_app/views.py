@@ -223,15 +223,9 @@ def exercise_library(request):
     return render(request, 'workout_app/exercise_library.html', context)
 
 @login_required
-def exercise_detail(request, pk):
-    """View details of a specific exercise"""
-    exercise = get_object_or_404(Exercise, pk=pk)
-    
-    context = {
-        'exercise': exercise
-    }
-    
-    return render(request, 'workout_app/exercise_detail.html', context)
+def exercise_detail(request, exercise_id):
+    exercise = get_object_or_404(Exercise, id=exercise_id)
+    return render(request, 'workout_app/exercise_detail.html', {'exercise': exercise})
 
 @login_required
 def start_workout(request, day_pk=None):
@@ -278,9 +272,9 @@ def perform_workout(request, log_pk):
             exercise_log.save()
         
         # Mark workout as completed
-        duration = int(request.POST.get('workout_duration', 0))
+        duration_seconds = int(request.POST.get('workout_duration', 0))
         workout_log.completed = True
-        workout_log.duration = duration
+        workout_log.duration = duration_seconds  # Store exact seconds
         workout_log.save()
         
         messages.success(request, 'Workout completed successfully!')

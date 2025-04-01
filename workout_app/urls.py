@@ -21,6 +21,10 @@ urlpatterns = [
     # Main application URLs
     path('', views.dashboard, name='dashboard'),
     
+    # Exercise Library
+    path('exercise-library/', views.exercise_library, name='exercise_library'),
+    path('exercise/<int:exercise_id>/', views.exercise_detail, name='exercise_detail'),
+    
     # Workout Plans
     path('workout-plans/', views.workout_plans, name='workout_plans'),
     path('workout-plans/<int:pk>/', views.workout_plan_detail, name='workout_plan_detail'),
