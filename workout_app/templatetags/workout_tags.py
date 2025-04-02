@@ -70,3 +70,33 @@ def absolute(value):
         return abs(value)
     except (ValueError, TypeError):
         return value
+
+@register.filter
+def div(value, arg):
+    """Divide the value by the argument"""
+    try:
+        return int(value) // int(arg)
+    except (ValueError, ZeroDivisionError):
+        return 0
+
+@register.filter
+def mod(value, arg):
+    """Return the modulo of the value and argument"""
+    try:
+        return int(value) % int(arg)
+    except (ValueError, ZeroDivisionError):
+        return 0
+
+@register.filter
+def format_duration(seconds):
+    """Format duration in seconds to a human-readable string"""
+    if seconds < 60:
+        return f"{seconds} second{'s' if seconds != 1 else ''}"
+    
+    minutes = seconds // 60
+    remaining_seconds = seconds % 60
+    
+    if remaining_seconds == 0:
+        return f"{minutes} minute{'s' if minutes != 1 else ''}"
+    
+    return f"{minutes} minute{'s' if minutes != 1 else ''} {remaining_seconds} second{'s' if remaining_seconds != 1 else ''}"
